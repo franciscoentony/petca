@@ -6,7 +6,7 @@ export default function Index({ navigation }) {
     return (
       <ScrollView>
         <View className="w-screen h-screen bg-[#F9F7F3] flex items-center">
-          <View className="w-full bg-[#F7A072] h-140 rounded-[3rem] overflow-hidden">
+          <View className="w-full bg-[#F7A072] h-140 rounded-b-[3rem] overflow-hidden">
             <Image source={require('../../assets/cao_e_gato.jpeg')} className="w-150 h-150 object-contain relative right-10"/>
           </View>
           <View className="w-full px-10 mt-10 flex gap-4">

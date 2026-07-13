@@ -1,15 +1,25 @@
-import { View, Text, ScrollView, Image, TouchableOpacity } from "react-native";
-import React, { useState } from "react";
+import { View, Text, ScrollView, Image, TouchableOpacity, ActivityIndicator } from "react-native";
+import React, { useState, useContext } from "react";
 
 import Input from "../components/Inputs/Input";
 import ButtonPrimary from "../components/ButtonPrimary";
+
+// 1. Importa o Contexto de Autenticação
+import { AuthContext } from "../../src/context/AuthContext"; // Ajusta o caminho relativo se necessário
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function handleSubmit() {
-    alert(`Email: ${email}\nSenha: ${password}`)
+  // Consome as funções e estados globais do AuthContext
+  const { login, isLoading } = useContext(AuthContext);
+
+  async function handleSubmit() {
+    if (!email || !password) {
+      alert("Por favor, preencha todos os campos.");
+      return;
+    }
+    await login(email, password);
   }
 
   return (
@@ -47,7 +57,13 @@ export default function Login() {
               <Text className="text-xl font-semibold text-[#F7A072]">Esqueceu a Senha?</Text>
             </TouchableOpacity>
           </View>
-          <ButtonPrimary onPress={handleSubmit}>Entrar</ButtonPrimary>
+
+          {/* 4. Mostra um indicador de carregamento enquanto valida com a API */}
+          {isLoading ? (
+            <ActivityIndicator size="large" color="#F7A072" />
+          ) : (
+            <ButtonPrimary onPress={handleSubmit}>Entrar</ButtonPrimary>
+          )}
         </View>
       </View>
     </ScrollView>
